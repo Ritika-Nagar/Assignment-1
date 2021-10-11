@@ -6,7 +6,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         // Array list for classes
-        ArrayList<vaccine> vaccineList = new ArrayList<vaccine>();
+        ArrayList<String> vaccineList = new ArrayList<String>();
         ArrayList<slot> slotList = new ArrayList<slot>();
         //ArrayList<citizen> citizenList = new ArrayList<citizen>();
 
@@ -15,6 +15,7 @@ public class Main {
         Map<Integer, ArrayList<hospital>> hospitalMap = new HashMap<Integer, ArrayList<hospital>>();
         Map<Integer, ArrayList<slot>> slotMap = new HashMap<Integer, ArrayList<slot>>();
         Map<Integer, ArrayList<citizen>> citizenMap = new HashMap<Integer, ArrayList<citizen>>();
+        Map<String, ArrayList<vaccine>> vaccineMap = new HashMap<String, ArrayList<vaccine>>();
 
 
         Scanner sc = new Scanner(System.in);
@@ -48,8 +49,10 @@ public class Main {
                 int nofDose = sc.nextInt();
                 System.out.print("Gap between Doses: ");
                 int gap = sc.nextInt();
+                vaccineMap.put(vacName, new ArrayList<vaccine>());
+                vaccineMap.get(vacName).add(new vaccine(vacName,nofDose,gap));
 
-                vaccineList.add(new vaccine(vacName, nofDose, gap));
+                vaccineList.add(vacName);
                 System.out.println("---------------------------------");
 
 
@@ -112,13 +115,13 @@ public class Main {
                     int quant = sc.nextInt();
                     System.out.println("Select Vaccine :");
 
-                    Iterator<vaccine> it = vaccineList.iterator();
+                    Iterator<String> it = vaccineList.iterator();
                     while (it.hasNext()) {
-                        System.out.println(it.next().getNameofVaccine());
+                        System.out.println(it.next());
                     }
 
                     int a = sc.nextInt();
-                    String str = vaccineList.get(a).getNameofVaccine();
+                    String str = vaccineList.get(a);
                     slotMap.put(hospID,new ArrayList<slot>());
                     slotMap.get(hospID).add(new slot(hospID,slots,dayNum,quant,str));
                     System.out.println("---------------------------------");
@@ -187,6 +190,28 @@ public class Main {
                     }
                 }
             }
+
+            // List all hospital for Vaccination
+            if(inp==6){
+            System.out.print("Enter Hospital ID: ");
+            int hospId= sc.nextInt();
+
+            }
+
+            // Check vaccination status
+
+            if(inp==7){
+                System.out.print("Enter patient Unique ID: ");
+                int pID= sc.nextInt();
+
+
+            }
+
+
+
+
+
+
         }
     }
 }
