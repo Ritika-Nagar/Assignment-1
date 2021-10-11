@@ -116,14 +116,20 @@ public class Main {
                     System.out.println("Select Vaccine :");
 
                     Iterator<String> it = vaccineList.iterator();
-                    while (it.hasNext()) {
+                    while(it.hasNext()) {
                         System.out.println(it.next());
                     }
 
                     int a = sc.nextInt();
                     String str = vaccineList.get(a);
-                    slotMap.put(hospID,new ArrayList<slot>());
-                    slotMap.get(hospID).add(new slot(hospID,slots,dayNum,quant,str));
+                    if(slotMap.containsKey(hospID)){
+                       ArrayList<slot> sList= slotMap.get(hospID);
+                       sList.add(new slot(hospID,slots,dayNum,quant,str));
+                    }
+                    else{
+                        slotMap.put(hospID,new ArrayList<slot>());
+                        slotMap.get(hospID).add(new slot(hospID,slots,dayNum,quant,str));
+                    }
                     System.out.println("---------------------------------");
 
                 }
@@ -152,7 +158,7 @@ public class Main {
                         ArrayList<hospital> hosp = hospitalMap.get(pCode);
 
                         Iterator<hospital> it = hosp.iterator();
-                        while (it.hasNext()) {
+                        while(it.hasNext()) {
                             hospital h = it.next();
                             System.out.print(h.getUniqueID() + " ");
                             System.out.println(h.getHospName());
@@ -160,27 +166,22 @@ public class Main {
                         System.out.println("Enter Hospital ID: ");
                         int hoID = sc.nextInt();
                         ArrayList<slot> slo = slotMap.get(hoID);
-
                         Iterator<slot> s = slo.iterator();
                         while (s.hasNext()) {
                             slot sl = s.next();
-                            System.out.println("Day");
                             int n = sl.getNumOfSlots();
                             System.out.print("->" + " Day ");
                             System.out.print(sl.getDayNum() + " ");
                             System.out.print("Available Qty: " + sl.getQuant());
-                            System.out.print(" Vaccine: " + sl.getVacName());
+                            System.out.println(" Vaccine: " + sl.getVacName());
                         }
-                        System.out.print("Choose Slot");
+                        System.out.print("Choose Slot: ");
                         int cho = sc.nextInt();
-
                         ArrayList<citizen> citi = citizenMap.get(ID);
-
                         Iterator<citizen> cit = citi.iterator();
                         while (cit.hasNext()) {
                             citizen c = cit.next();
-
-                            System.out.print(c.getName() + "  vaccinated with ");
+                            System.out.print(c.getName() + "  vaccinated with "+ slotMap.get(hoID).get(cho).getVacName());
                             System.out.println();
                         }
 
@@ -194,7 +195,18 @@ public class Main {
             // List all hospital for Vaccination
             if(inp==6){
             System.out.print("Enter Hospital ID: ");
-            int hospId= sc.nextInt();
+                int hoID = sc.nextInt();
+                ArrayList<slot> slo = slotMap.get(hoID);
+                Iterator<slot> s = slo.iterator();
+                while (s.hasNext()) {
+                    slot sl = s.next();
+                    int n = sl.getNumOfSlots();
+                    System.out.print("->" + " Day ");
+                    System.out.print(sl.getDayNum() + " ");
+                    System.out.print("Available Qty: " + sl.getQuant());
+                    System.out.println(" Vaccine: " + sl.getVacName());
+                }
+
 
             }
 
